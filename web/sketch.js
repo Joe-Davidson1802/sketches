@@ -12,9 +12,9 @@ function setup() {
 function draw() {
   background(0);
 
-  drawLines()
-  while (orbs.filter(x => !x.disabled).length < population) orbs.push(new Orb());
-
+  drawLines();
+  while (orbs.filter((x) => !x.disabled).length < population)
+    orbs.push(new Orb());
 
   for (let i = 0; i < orbs.length; i++) {
     let o = orbs[i];
@@ -22,23 +22,31 @@ function draw() {
     o.draw();
   }
 
-  orbs = orbs.filter(x => !x.disabled)
-
+  orbs = orbs.filter((x) => !x.disabled);
 }
 
-
 function drawLines() {
-
   for (let i = 0; i < orbs.length; i++) {
     for (let j = 0; j < orbs.length; j++) {
       if (orbs[i].disabled || orbs[j].disabled) continue;
-      let distance= orbs[i].pos.dist(orbs[j].pos);
+      let distance = orbs[i].pos.dist(orbs[j].pos);
       if (distance < sensitivity) {
         strokeWeight(3);
         stroke(map(distance, 0, sensitivity, 255, 0));
-        
+
         line(orbs[i].pos.x, orbs[i].pos.y, orbs[j].pos.x, orbs[j].pos.y);
       }
+    }
+  }
+  let mousePos = createVector(mouseX, mouseY);
+  for (let i = 0; i < orbs.length; i++) {
+    if (orbs[i].disabled) continue;
+    let distance = orbs[i].pos.dist(mousePos);
+    if (distance < sensitivity) {
+      strokeWeight(3);
+      stroke(map(distance, 0, sensitivity, 255, 0));
+
+      line(orbs[i].pos.x, orbs[i].pos.y, mousePos.x, mousePos.y);
     }
   }
 }
