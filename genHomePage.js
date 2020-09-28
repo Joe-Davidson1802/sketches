@@ -5,7 +5,7 @@ let file = "";
 fs.readdir(".", (err, dirs) => {
   for (let d of dirs) {
     if (d !== ".git" && d !== "genHomePage.js" && d !== "CNAME") {
-      file += `<a href="/sketches/${d}/index.html">${d}</a></br>`;
+      file += `<a href="/${d}/index.html">${d}</a></br>`;
     }
   }
   console.log(file);
